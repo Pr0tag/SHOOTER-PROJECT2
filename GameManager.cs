@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    // Enemy prefabs
     public GameObject enemyOnePrefab;
     public GameObject enemyTwoPrefab;
     public GameObject enemyThreePrefab;
+
+    // Lives UI
+    public TextMeshProUGUI LivesText;
+    // public Player Player;
 
     // Start is called before the first frame update
     void Start()
@@ -37,4 +44,12 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(enemyThreePrefab, new Vector3(Random.Range(-9f, 9f), 6.5f, 0), Quaternion.identity);
     }
+
+    // Change lives UI
+    public void ChangeLivesText (int currentlives)
+    {
+        LivesText.text = "Lives: " + currentlives;
+    }
+
+
 }
