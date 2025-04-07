@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        playerSpeed = 5f;
+        playerSpeed = 3f;
         lives = 3;
         gameManager.ChangeLivesText(lives); // Tell player lives remaining 
     }
@@ -44,12 +44,12 @@ public class Player : MonoBehaviour
         gameManager.ChangeLivesText(lives);
     }
 
-
+ 
 
 
 
     // Player Health
-    public void LoseALife()
+    public void LoseALife() 
     {
         lives -= 1;     // -1 life if player hits enemy
         gameManager.ChangeLivesText(lives); // Tell player lives remaining 
@@ -58,30 +58,6 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    public void GainALife()
-    {
-        lives += 1;
-        gameManager.ChangeLivesText(lives);
-
-
-
-    }
-
-    public void MaxLife()
-    {
-        if (lives > 3)
-        {
-            lives = 3;
-        }
-
-        
-        gameManager.ChangeLivesText(lives);
-
-
-
-    }
-
-
 
     // Player Weponds
     void Shooting()
