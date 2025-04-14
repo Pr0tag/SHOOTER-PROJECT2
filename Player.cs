@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        playerSpeed = 3f;
+        playerSpeed = 5f;
         lives = 3;
         gameManager.ChangeLivesText(lives); // Tell player lives remaining 
     }
@@ -44,13 +44,16 @@ public class Player : MonoBehaviour
         gameManager.ChangeLivesText(lives);
     }
 
- 
+
 
 
 
     // Player Health
-    public void LoseALife() 
+    public void LoseALife()
     {
+        //do i have a shield?
+        //if yes deactivate shield do not lose life
+        //if no, lose a life
         lives -= 1;     // -1 life if player hits enemy
         gameManager.ChangeLivesText(lives); // Tell player lives remaining 
         if (lives == 0) // lives = zero then player deleted
@@ -58,6 +61,65 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    IEnumerator SpeedPowerDown()
+    {
+        yield return new WaitForSeconds(3f);
+        playerSpeed = 5f;
+        gameManager.ManagePowerUpText(0);
+        
+
+    }
+    private void OnTriggerEnter2D(Collider2D WhatDidIHit)
+    {
+        if (WhatDidIHit.tag == "Powerup")
+        {
+            Destroy(WhatDidIHit.gameObject);
+            //Shield
+            int whichpowerup = Random.Range(1, 3);
+            switch (whichpowerup)
+            {
+                case 1:
+                    //picked up shield
+                    //do I alredy have equipped
+                    //if yes : do nothing
+                    // if not : activate shield visibility
+                    gameManager.ManagePowerUpText(1);
+                    break;
+                case 2:
+                    //picked up speed
+                    playerSpeed = 8;
+                    gameManager.ManagePowerUpText(2);
+                    StartCoroutine(SpeedPowerDown());
+                    break;
+            }
+
+        }
+    }
+    public void GainALife()
+    {
+        lives += 1;
+        gameManager.ChangeLivesText(lives);
+
+
+
+    }
+
+    public void MaxLife()
+    {
+        if (lives > 3)
+        {
+            lives = 3;
+        }
+
+        
+        gameManager.ChangeLivesText(lives);
+
+
+
+    }
+
+
 
     // Player Weponds
     void Shooting()
