@@ -1,3 +1,3 @@
-Brett - Task 3 - 
-Jake - Task 2
-Logan - Task 1 - 
+Brett - Task 3,
+Jake - Task 2,
+Logan - Task 1. 
