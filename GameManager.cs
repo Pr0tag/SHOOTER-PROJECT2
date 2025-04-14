@@ -6,6 +6,11 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject audioPlayer;
+    public AudioClip powerupSound;
+    public AudioClip powerdownSound;
+
+
     // Enemy prefabs
     public GameObject enemyOnePrefab;
     public GameObject enemyTwoPrefab;
@@ -30,7 +35,7 @@ public class GameManager : MonoBehaviour
         InvokeRepeating("CreateEnemyTwo", 2, 3);
         InvokeRepeating("CreateEnemyThree", 3, 4);
         StartCoroutine(SpawnPowerups());
-     
+
         powerupText.text = "No Powerups";
 
     }
@@ -40,37 +45,59 @@ public class GameManager : MonoBehaviour
     {
 
     }
-  
 
-   public IEnumerator SpawnPowerups()
+
+    public IEnumerator SpawnPowerups()
     {
         float spawnTime = Random.Range(1, 5);
         yield return new WaitForSeconds(spawnTime);
         CreatePowerup();
         StartCoroutine(SpawnPowerups());
     }
-        
-    
+
+
     public void ManagePowerUpText(int powerupType)
     {
-        switch (powerupType) {
+        switch (powerupType)
+        {
             //picked up shield
-            case 1: powerupText.text = "Shield!";
-                    break;
-            case 2: powerupText.text = "Speed Boost!";
-            
-                    break;
-                //default text setting when no powerups are held
-                    default: powerupText.text = " No Powerups ";
-             
-                    break; }
+            case 1:
+                powerupText.text = "Shield!";
+                break;
+            case 2:
+                powerupText.text = "Speed Boost!";
+
+                break;
+            //default text setting when no powerups are held
+            default:
+                powerupText.text = " No Powerups ";
+
+                break;
+        }
     }
 
 
 
+    // Sounds for powerups
+    public void PlaySound(int whichSound)
+    {
+        switch (whichSound)
+        {
+            case 1:
+                audioPlayer.GetComponent<AudioSource>().PlayOneShot(powerupSound);
+                break;
+            case 2:
+                audioPlayer.GetComponent<AudioSource>().PlayOneShot(powerdownSound);
+                break;
+
+        }
+
+    }
+
+
 
     // Spawn Enemies in set position at random 
-    void CreateEnemyOne() 
+    void CreateEnemyOne()
     {
         Instantiate(enemyOnePrefab, new Vector3(Random.Range(-9f, 9f), 6.5f, 0), Quaternion.identity);
     }
@@ -87,7 +114,7 @@ public class GameManager : MonoBehaviour
         Instantiate(powerupPrefab, new Vector3(Random.Range(-horizontalScreenSize * 0.9f, horizontalScreenSize * 0.9f), Random.Range(-verticalScreenSize * 0.9f, verticalScreenSize * 0.9f), 0), Quaternion.identity);
     }
     // Change lives UI
-    public void ChangeLivesText (int currentlives)
+    public void ChangeLivesText(int currentlives)
     {
         LivesText.text = "Lives: " + currentlives;
     }

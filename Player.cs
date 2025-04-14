@@ -67,7 +67,8 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(3f);
         playerSpeed = 5f;
         gameManager.ManagePowerUpText(0);
-        
+        gameManager.PlaySound(2);
+
 
     }
     private void OnTriggerEnter2D(Collider2D WhatDidIHit)
@@ -85,12 +86,14 @@ public class Player : MonoBehaviour
                     //if yes : do nothing
                     // if not : activate shield visibility
                     gameManager.ManagePowerUpText(1);
+                    gameManager.PlaySound(1);
                     break;
                 case 2:
                     //picked up speed
                     playerSpeed = 8;
                     gameManager.ManagePowerUpText(2);
                     StartCoroutine(SpeedPowerDown());
+                    gameManager.PlaySound(1);
                     break;
             }
 
@@ -112,7 +115,7 @@ public class Player : MonoBehaviour
             lives = 3;
         }
 
-        
+
         gameManager.ChangeLivesText(lives);
 
 
@@ -140,7 +143,7 @@ public class Player : MonoBehaviour
 
         //Move the player
         transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * Time.deltaTime * playerSpeed);
-        
+
         //Player leaves the screen horizontally
         if (transform.position.x > horizontalScreenLimit || transform.position.x <= -horizontalScreenLimit)
         {
